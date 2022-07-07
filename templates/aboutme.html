@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/spotifystats.css') }}">
+        <link rel = "stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Links:</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" id = "github-button" target = "_blank" href="https://www.github.com/luchophelps13">Github <span class="sr-only">(current)</span></a>
+                </li>
+                {% if logged_in_elem %} <!-- LOGGED IN, ALLOW USER TO RETURN TO STAT PAGE -->
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('get_tracks')}}">Spotify Stats <span class="sr-only">(current)</span></a>
+                  </li>
+                {% else %} <!-- NOT LOGGED IN, PROMPT USER TO LOG IN -->
+                  <form class="form-inline my-2 my-lg-0" method = "POST">
+                    <button class="btn btn-outline-success my-2 my-sm-0" name = "loginbutton" id = "loginbutton" type="submit">Log In</button>
+                  </form>
+                {% endif %}
+                <li class="nav-item dropdown">
+                </li>
+              </ul>
+            </div>
+          </nav>
+    </head>
+
+    <body>
+      <div id="info" style="margin: auto; text-align: center;">
+        <h1 style="text-align: center;"><b>About Me</b></h1>
+
+        <br>
+        <br>
+
+        <p>This project uses the Spotipy Python library to show the user their recent artists, recommend new artists, and graph song data.</p>
+
+        <ul id = "about-me-list">
+            <li>Prospect High School '24</li>
+            <br>
+            <li>Love to play music, sports, and see my friends</li>
+            <br>
+            <li>Programming languages I use: Python, C# & Unity, HTML/CSS, JS</li>
+            <br>
+            <li>insta: <a target = "_blank" href = "https://www.instagram.com/lucasphillips13/">@lucasphillips13</a></li>
+        </ul>
+      </div>
+    </body>
+
+</html>
