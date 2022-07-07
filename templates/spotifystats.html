@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel = "stylesheet" type = "text/css" href = "{{ url_for('static',filename='styles/spotifystats.css') }}">
+        <link rel = "stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Links:</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" id = "github-button" target = "_blank" href="https://github.com/luchophelps13">Github <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href = "{{url_for('about_me')}}">About Me <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                </li>
+              </ul>
+            </div>
+          </nav>
+    </head>
+
+    <body>
+
+      <br>
+      <h1 style = "margin: auto; text-align: center;">Spotify Stats</h1>
+      <br>
+      <br>
+
+      <div id="parent-for-top-stats">
+
+        <div id="top-five-artists" class = "stats-left">
+          <div id="top-five-artists-text">
+            <h3 style = "color: white; text-align: center;">Your Top ≤5 Artists, Recently:</h3>
+            <br>
+            {% if top_five_artists is not none %} <!-- I removed the colon from the if and for -->
+  
+              {%for arg in top_five_artists %}
+                <img src="data:image/png;base64, {{ arg[1] }}" style="width:10em; height:10em; margin-left: auto; margin-right: auto; display: block;" alt="{{arg[0]}}"><p style="text-align: center;" class = "artist">#{{top_five_artists.index(arg) + 1}} - {{arg[0]}}</p>
+              {%endfor%}
+  
+            {%endif%}
+          </div>
+        </div>
+
+        <div id="top-five-songs" class = "stats-right">
+
+          <div id="top-five-songs-recently" style="height: 50%;">
+
+            <h3 style = "color: white;  text-align: center;">Your Top ≤5 Songs, Recently:</h3>
+            <br>
+            {%if top_five_songs_recently is not none: %}
+    
+                {%for i in range(top_five_songs_recently|length): %}
+                  <h6 style="text-align: center;" class = "artist">#{{i+1}} ➜ <i>{{top_five_songs_recently[i][0][0]}}</i> - {{top_five_songs_recently[i][0][1][0]}}</h6>
+                  <br>
+                {%endfor%}
+    
+            {%endif%}
+  
+          </div>
+
+          {%for _ in range(4): %}
+            <br>
+          {%endfor%}
+  
+          <div id="five-most-recent-songs" style="height: 50%;">
+            <h3 style = "text-align: center; color: white; ">Here are the 5 songs you've played recently:</h3>
+            <br>
+            {%if five_recent_songs is not none:%} <!--and urls is not none: %}-->
+    
+                {%for i in range(five_recent_songs|length): %}
+                  <h6 style = " text-align: center;" class = "artist">#{{i+1}} ➜ <i>{{five_recent_songs[i][0]}}</i> - {{five_recent_songs[i][1]}}</h6>
+                  <br>
+                {%endfor%}
+    
+            {%endif%}
+          </div>
+        </div>
+    
+      </div>
+      
+
+      {%for _ in range(8): %}
+          <br>
+      {%endfor%}
+
+      <div id="parent-for-recent-stats">
+        <h3 style = "margin: auto; text-align: center; color: white;"> Here are some stats from your <b>recent</b> artists: </h3>
+
+        {%for _ in range(7): %}
+            <br>
+        {%endfor%}
+          
+        <div class = "stats-left" id = "related-artists">
+
+          <div id="genre-breakdown-div">
+            <img src="data:image/png;base64, {{ bar_graph_of_genres }}" style="margin-left: auto; margin-right: auto; display: block;" alt="Bar Graph of Your Genre Breakdown" id = "genre-breakdown-graph">
+          </div>
+
+          {%for _ in range(2): %}
+            <br>
+          {%endfor%}
+
+          {%if artists_and_related_artists is not none: %}
+
+            {%for value in artists_and_related_artists: %} 
+                <p style="text-align: center;">Because you listen to: {{value[0]}}, I recommend: <a href = "{{value[2]}}" style="color: white;" target="_blank"><u>{{value[1]}}</u></a></p>
+            {%endfor%}
+
+          {%endif%}
+
+          {%for _ in range(4): %}
+            <br>
+          {%endfor%}
+
+          <div id="make-spotify-playlist" style = "margin-left: auto; margin-right: auto;">
+            <form name = "spotify-playlist-form" id = "spotify-playlist-form" method = "POST" style = "margin: auto;">
+              <button src = "#make-spotify-playlist" class = "btn btn-outline-success my-2 my-sm-0" name = "generateplaylistbutton" id = "generate-playlist-button" type = "submit" style = "margin: auto; width: 100%;">Generate Spotify Playlist! :D</button>
+            </form>
+
+            {% if show_playlist: %}
+              <iframe style="border-radius:12px" id = "spotify-miniplayer" src="{{url}}" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+            {%endif%}
+          </div>
+
+          {%for _ in range(11): %}
+            <br>
+          {%endfor%}
+        </div>
+
+        <div class = "stats-right">
+
+          <h3 style = "color: white; text-align: center; font-weight:normal;">Your Top ≤5 Sub-genres:</h3>
+
+          <br>
+
+          <div id="top-5-subgenres">
+            {%if five_subgenres is not none: %}
+    
+                {%for i in range(five_subgenres|length): %}
+                  <h6 style="text-align: center;" class = "artist">#{{i + 1}} ➜ {{five_subgenres[i]}}</h6>
+                  <br>
+                {%endfor%}
+    
+            {%endif%}
+          </div>
+
+          {%for _ in range(8): %}
+            <br>
+          {%endfor%}
+
+          <div id = "breakdown-of-artists">
+            <img src="data:image/png;base64, {{ pie_graph_of_artists }}" alt="Pie graph of each artist from your recent songs">
+            <figcaption style="text-align: center; color: white">Features are included and weighted the same</figcaption>
+          </div>
+
+          {%for _ in range(5): %}
+            <br>
+          {%endfor%}
+  
+          <div id="averages-graph" style="text-align: center; height: 50%; max-width: fit-content;">
+            <img src="data:image/png;base64, {{ avg_graph }}" id = "averages-graph-img" alt="Graph of average stats from your recent songs">
+          </div>
+        </div>
+
+      </div>
+
+      {%for _ in range(11):%}
+        <br>
+      {%endfor%}
+
+    </body>
+</html>
