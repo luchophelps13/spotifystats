@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        
+            <meta charset="UTF-8">
+            <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/spotifystats.css') }}">
+            <link rel = "stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+    
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <a class="navbar-brand" href="#">Links:</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <li class="nav-item active">
+                  <a class="nav-link" target = "_blank" href="https://www.github.com/luchophelps13" style = "margin:0px" id = "github-button">Github<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{{url_for('about_me')}}" style = "color:black">About Me <span class="sr-only">(current)</span></a>
+                </li>
+                <form class="form-inline my-2 my-lg-0" method = "POST">
+                  <button class="btn btn-outline-success my-2 my-sm-0" name = "loginbutton" id = "loginbutton" type="submit">Log In</button>
+                </form>
+
+              </div>
+            </nav>
+    </head>
+
+    <body>
+      <div id="overview">
+        <p><a href = "https://www.youtube.com/watch?v=rEq1Z0bjdwc">Hello There!</a> This is a project developed by Lucas Phillips. It uses the Spotify API, Spotipy, and various graphing libraries to give the user a strong understanding of their listening history, including top artists, recent artists, and song data. Furthermore, new artists are recommended based of the user's top artists. 
+        If you test every feature, you will leave with a greater understanding of your music taste and have a playlist generated for you :)</p>
+      </div>
+    </body>
+
+    
+</html>
